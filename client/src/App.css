@@ -78,6 +78,10 @@ body{
   transform: translate(41%, 0%);
 }
 
+#outlined-basic{
+  background-color: #eeeedd
+}
+
 .playlister-button,
 .playlister-button-disabled {
   font-size: 36pt;
