@@ -420,6 +420,19 @@ function GlobalStoreContextProvider(props) {
         asyncPublishList(id);
     }
 
+    store.searchPlaylists = function (listname) {
+        async function asyncSearchLists(listname) {
+            let response = await api.searchPlaylistsByName(listname);
+            if (response.data.success) {
+                let pairsArray = response.data.idNamePairs;
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: pairsArray
+                });
+            }
+        }
+        asyncSearchLists(listname);
+    }
     // THE FOLLOWING 8 FUNCTIONS ARE FOR COORDINATING THE UPDATING
     // OF A LIST, WHICH INCLUDES DEALING WITH THE TRANSACTION STACK. THE
     // FUNCTIONS ARE setCurrentList, addMoveItemTransaction, addUpdateItemTransaction,

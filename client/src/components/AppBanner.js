@@ -13,11 +13,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 
 export default function AppBanner() {
     const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [text, setText] = useState("");
     const isMenuOpen = Boolean(anchorEl);
 
     const handleProfileMenuOpen = (event) => {
@@ -35,6 +37,17 @@ export default function AppBanner() {
 
     const handleHouseClick = () => {
         store.closeCurrentList();
+    }
+
+    function handleKeyPress(event) {
+        if (event.code === "Enter") {
+            //let id = event.target.id.substring("list-".length);
+            //store.changeListName(id, text);
+            store.searchPlaylists(text);
+        }
+    }
+    function handleUpdateText(event) {
+        setText(event.target.value);
     }
 
     const menuId = 'primary-search-account-menu';
@@ -107,7 +120,11 @@ export default function AppBanner() {
                     >
                         <Link onClick={handleHouseClick} style={{ textDecoration: 'none', color: 'white' }} to='/'>⌂</Link>
                     </Typography>
+                    
                     <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
+                    <Typography sx={{color: "#702963", fontWeight:"bold", fontSize:"25px"}} id="search" variant="h6" component="h2">
+                        <input id="search-textfield" className='search-textfield' type="text" defaultValue={"search"} onChange={handleUpdateText} onKeyPress= {handleKeyPress}/>
+                    </Typography>
                     <Box sx={{ height: "90px", display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
                             size="large"
