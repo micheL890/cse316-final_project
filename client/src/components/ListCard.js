@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
+import PublishIcon from '@mui/icons-material/Publish';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -54,6 +55,13 @@ function ListCard(props) {
         store.markListForDeletion(id);
     }
 
+    async function handlePublishList(event, id) {
+        event.stopPropagation();
+        let _id = event.target.id;
+        _id = ("" + _id).substring("publish-list-".length);
+        store.publishList(id);
+    }
+
     function handleKeyPress(event) {
         if (event.code === "Enter") {
             let id = event.target.id.substring("list-".length);
@@ -97,8 +105,36 @@ function ListCard(props) {
                     <DeleteIcon style={{fontSize:'48pt'}} />
                 </IconButton>
             </Box>
+            <Box sx={{ p: 1 }}>
+                <IconButton onClick={(event) => {
+                        handlePublishList(event, idNamePair._id)
+                    }} aria-label='publish'>
+                    <PublishIcon style={{fontSize:'48pt'}} />
+                </IconButton>
+            </Box>
         </ListItem>
-
+    if(idNamePair.published){
+        cardElement =
+        <ListItem
+            id={idNamePair._id}
+            key={idNamePair._id}
+            sx={{borderRadius:"25px", p: "10px", bgcolor: '#8000ff ', marginTop: '15px', display: 'flex', p: 1 }}
+            style={{transform:"translate(1%,0%)", width: '98%', fontSize: '48pt' }}
+            button
+            onClick={(event) => {
+                handleLoadList(event, idNamePair._id)
+            }}
+        >
+            <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
+            <Box sx={{ p: 1 }}>
+                <IconButton onClick={(event) => {
+                        handleDeleteList(event, idNamePair._id)
+                    }} aria-label='delete'>
+                    <DeleteIcon style={{fontSize:'48pt'}} />
+                </IconButton>
+            </Box>
+        </ListItem>
+    }
     if (editActive) {
         cardElement =
             <TextField

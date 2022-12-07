@@ -150,7 +150,8 @@ getPlaylistPairs = async (req, res) => {
                         let list = playlists[key];
                         let pair = {
                             _id: list._id,
-                            name: list.name
+                            name: list.name,
+                            published: list.published
                         };
                         pairs.push(pair);
                     }
@@ -212,10 +213,15 @@ updatePlaylist = async (req, res) => {
                 console.log("req.userId: " + req.userId);
                 if (user._id == req.userId) {
                     console.log("correct user!");
+                    console.log("inside update playlist")
                     console.log("req.body.name: " + req.body.name);
 
                     list.name = body.playlist.name;
                     list.songs = body.playlist.songs;
+                    if(body.playlist.published){
+                        list.published = body.playlist.published;
+                    }
+                    
                     list
                         .save()
                         .then(() => {
@@ -243,6 +249,8 @@ updatePlaylist = async (req, res) => {
         asyncFindUser(playlist);
     })
 }
+
+
 module.exports = {
     createPlaylist,
     deletePlaylist,

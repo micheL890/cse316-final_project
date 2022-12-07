@@ -6,6 +6,7 @@ import MUIRemoveSongModal from './MUIRemoveSongModal'
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import { GlobalStoreContext } from '../store/index.js'
+import YouTubePlayer from './YouTubePlayer'
 /*
     This React component lets us edit a loaded list, which only
     happens when we are on the proper route.
@@ -24,6 +25,7 @@ function WorkspaceScreen() {
         modalJSX = <MUIRemoveSongModal />;
     }
     return (
+        <div>
         <Box id="list-selector-list">
         <List 
             id="playlist-cards" 
@@ -42,6 +44,10 @@ function WorkspaceScreen() {
          </List>            
          { modalJSX }
          </Box>
+         <Box id= "youtubeplayer">
+            <YouTubePlayer></YouTubePlayer>
+         </Box>
+         </div>
     )
 }
 
