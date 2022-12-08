@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
 import PublishIcon from '@mui/icons-material/Publish';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -73,6 +74,10 @@ function ListCard(props) {
         setText(event.target.value);
     }
 
+    function handleCopy(event, id) {
+        store.copyList(id);
+    }
+
     let selectClass = "unselected-list-card";
     if (selected) {
         selectClass = "selected-list-card";
@@ -95,21 +100,28 @@ function ListCard(props) {
             <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
             <Box sx={{ p: 1 }}>
                 <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                    <EditIcon style={{fontSize:'48pt'}} />
+                    <EditIcon style={{fontSize:'36pt'}} />
                 </IconButton>
             </Box>
             <Box sx={{ p: 1 }}>
                 <IconButton onClick={(event) => {
                         handleDeleteList(event, idNamePair._id)
                     }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'48pt'}} />
+                    <DeleteIcon style={{fontSize:'36pt'}} />
                 </IconButton>
             </Box>
             <Box sx={{ p: 1 }}>
                 <IconButton onClick={(event) => {
                         handlePublishList(event, idNamePair._id)
                     }} aria-label='publish'>
-                    <PublishIcon style={{fontSize:'48pt'}} />
+                    <PublishIcon style={{fontSize:'36pt'}} />
+                </IconButton>
+            </Box>
+            <Box sx={{ p: 1 }}>
+                <IconButton onClick={(event) => {
+                        handleCopy(event, idNamePair._id)
+                    }} aria-label='publish'>
+                    <ContentCopyIcon style={{fontSize:'36pt'}} />
                 </IconButton>
             </Box>
         </ListItem>
@@ -118,7 +130,7 @@ function ListCard(props) {
         <ListItem
             id={idNamePair._id}
             key={idNamePair._id}
-            sx={{borderRadius:"25px", p: "10px", bgcolor: '#8000ff ', marginTop: '15px', display: 'flex', p: 1 }}
+            sx={{borderRadius:"25px", p: "10px", bgcolor: '#d37ef2 ', marginTop: '15px', display: 'flex', p: 1 }}
             style={{transform:"translate(1%,0%)", width: '98%', fontSize: '48pt' }}
             button
             onClick={(event) => {
@@ -130,7 +142,14 @@ function ListCard(props) {
                 <IconButton onClick={(event) => {
                         handleDeleteList(event, idNamePair._id)
                     }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'48pt'}} />
+                    <DeleteIcon style={{fontSize:'36pt'}} />
+                </IconButton>
+            </Box>
+            <Box sx={{ p: 1 }}>
+                <IconButton onClick={(event) => {
+                        handleCopy(event, idNamePair._id)
+                    }} aria-label='publish'>
+                    <ContentCopyIcon style={{fontSize:'36pt'}} />
                 </IconButton>
             </Box>
         </ListItem>

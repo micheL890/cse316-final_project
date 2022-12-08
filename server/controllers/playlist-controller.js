@@ -271,7 +271,6 @@ searchPlaylists = async (req, res) => {
             };
             pairs.push(pair);
         }
-        console.log("space");
         console.log(pairs);
         return res.status(200).json({ success: true, idNamePairs: pairs })
     }).catch(err => console.log(err))

@@ -302,6 +302,32 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
+    store.copyList = async function (id) {
+        async function getList(id) {
+            let response1 = await api.getPlaylistById(id);
+            if (response1.data.success) {
+                let playlist = response1.data.playlist;
+                const response = await api.createPlaylist(playlist.name, playlist.songs, auth.user.email);
+                console.log("createNewList response: " + response);
+                if (response.status === 201) {
+                tps.clearAllTransactions();
+                let newList = response.data.playlist;
+                storeReducer({
+                    type: GlobalStoreActionType.CREATE_NEW_LIST,
+                    payload: newList
+                });
+
+            // IF IT'S A VALID LIST THEN LET'S START EDITING IT
+            history.push("/playlist/" + newList._id);
+        }
+        else {
+            console.log("API FAILED TO CREATE A NEW LIST");
+        }
+            }
+        }
+        getList(id);
+    }
+
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
     store.loadIdNamePairs = function () {
         async function asyncLoadIdNamePairs() {
