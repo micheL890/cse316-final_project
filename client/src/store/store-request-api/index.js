@@ -40,13 +40,17 @@ export const updatePlaylistById = (id, playlist) => {
     })
 }
 export const searchPlaylistsByName = (name) => api.get(`/search`)
+export const updatePlaylistStats = (id, playlist) => {
+    return api.put(`/comment/${id}`,{playlist : playlist})
+}
 const apis = {
     createPlaylist,
     deletePlaylistById,
     getPlaylistById,
     getPlaylistPairs,
     updatePlaylistById,
-    searchPlaylistsByName
+    searchPlaylistsByName,
+    updatePlaylistStats
 }
 
 export default apis

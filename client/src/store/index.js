@@ -460,6 +460,39 @@ function GlobalStoreContextProvider(props) {
         }
         asyncSearchLists(listname);
     }
+
+    store.addComment = function(id, ctext){
+        async function asyncPublishList(id) {
+            let response = await api.getPlaylistById(id);
+            if (response.data.success) {
+                let playlist = response.data.playlist;
+                playlist.comments.push(ctext);//{user: playlist.name, newcomment: comment});
+                async function updateListS(playlist) {
+                    response = await api.updatePlaylistStats(playlist._id, playlist);
+                    if (response.data.success) {
+                        async function getListPairs(playlist) {
+                            response = await api.getPlaylistPairs();
+                            if (response.data.success) {
+                                let pairsArray = response.data.idNamePairs;
+                                storeReducer({
+                                    type: GlobalStoreActionType.CHANGE_LIST_NAME,
+                                    payload: {
+                                        idNamePairs: pairsArray,
+                                        playlist: playlist
+                                    }
+                                });
+                                store.setCurrentList(id);
+                            }
+                        }
+                        getListPairs(playlist);
+                    }
+                }
+                updateListS(playlist);
+            }
+        }
+        asyncPublishList(id);
+    }
+
     // THE FOLLOWING 8 FUNCTIONS ARE FOR COORDINATING THE UPDATING
     // OF A LIST, WHICH INCLUDES DEALING WITH THE TRANSACTION STACK. THE
     // FUNCTIONS ARE setCurrentList, addMoveItemTransaction, addUpdateItemTransaction,
