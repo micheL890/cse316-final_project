@@ -269,13 +269,17 @@ searchPlaylists = async (req, res) => {
         for (let key in playlists) {
             let list = playlists[key];
             console.log(list.name);
-            let pair = {
+            console.log(req.params.name);
+            if(list.name.search(req.params.name) != -1){
+                let pair = {
                 _id: list._id,
                 name: list.name,
                 published: list.published,
                 comments: list.comments
             };
             pairs.push(pair);
+            }
+            
         }
         console.log(pairs);
         return res.status(200).json({ success: true, idNamePairs: pairs })

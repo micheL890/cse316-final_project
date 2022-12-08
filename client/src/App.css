@@ -58,7 +58,8 @@ body{
 }
 #splash-screen {
   /*background-image: url("https://www.gifcen.com/wp-content/uploads/2022/03/rickroll-gif-7.gif");*/
-  background-color: #d6c4d8;
+  /*background-color:;*/
+  background-image: linear-gradient( #d6c4d8, rgba(152, 122, 218, 0.954));
   background-size: cover;
   color: rgb(0, 0, 0);
   font-size: 10vw;
@@ -71,6 +72,9 @@ body{
   height:70%;
   text-align: center;
   vertical-align: center;
+}
+#splash{
+  font-size: 40px;
 }
 
 #edit-toolbar {
