@@ -38,6 +38,7 @@ function WorkspaceScreen() {
                         key={'playlist-song-' + (index)}
                         index={index}
                         song={song}
+                        published={store.currentList.published}
                     />
                 ))  
             }

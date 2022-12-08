@@ -101,7 +101,10 @@ getPlaylistById = async (req, res) => {
             return res.status(400).json({ success: false, error: err });
         }
         console.log("Found list: " + JSON.stringify(list));
-
+        //do we care if list belonds to user?
+        if(list.published){
+            return res.status(200).json({ success: true, playlist: list })
+        }
         // DOES THIS LIST BELONG TO THIS USER?
         async function asyncFindUser(list) {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
@@ -151,7 +154,8 @@ getPlaylistPairs = async (req, res) => {
                         let pair = {
                             _id: list._id,
                             name: list.name,
-                            published: list.published
+                            published: list.published,
+                            comments: list.comments
                         };
                         pairs.push(pair);
                     }
@@ -220,6 +224,7 @@ updatePlaylist = async (req, res) => {
                     list.songs = body.playlist.songs;
                     if(body.playlist.published){
                         list.published = body.playlist.published;
+                        list.comments = body.playlist.comments;
                     }
                     
                     list
@@ -267,7 +272,8 @@ searchPlaylists = async (req, res) => {
             let pair = {
                 _id: list._id,
                 name: list.name,
-                published: list.published
+                published: list.published,
+                comments: list.comments
             };
             pairs.push(pair);
         }
